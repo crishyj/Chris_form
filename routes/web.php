@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/login', [App\Http\Controllers\RutController::class, 'login'])->name('login');
+
 Route::post('/', [App\Http\Controllers\RutController::class, 'rutSingup'])->name('rutSingup');
 
 Route::get('/inscription', [App\Http\Controllers\RutController::class, 'inscription'])->name('inscription');

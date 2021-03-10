@@ -7,6 +7,10 @@ use App\Models\Rut;
 
 class RutController extends Controller
 {
+    public function login(){
+        return view('login');
+    }
+
     public function inscription(){
         return view('inscription');
     }
