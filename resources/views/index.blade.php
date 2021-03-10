@@ -24,7 +24,7 @@
                             <h5 class="wow fadeIn text-white b-500 pb-5" data-wow-delay="2s">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.</h5>
                             <div class="wow fadeInUp" data-wow-delay="2.5s">
                                 <a class="btn purple-gradient btn-rounded" href="#info">¡Quiero inscribirme!</a>
-                                <a class="btn purple-gradient btn-rounded" href="login.html">Ya estoy incrito</a>
+                                <a class="btn purple-gradient btn-rounded" href="{{route('login')}}">Ya estoy incrito</a>
                             </div>
                         </div>
                     </div>
