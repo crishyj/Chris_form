@@ -53,7 +53,7 @@
                     
                         </div>
                     </div>
-                </div>
+                </div>               
                 @endif
                 <img class="img-fluid mb-3 wow fadeInDown" src="{{asset('asset/images/logoCPLB-black.png')}}" style="width: 300px;">
                 <h5 class="text-dark b-500 wow fadeIn">Formulario</h5>
@@ -108,7 +108,7 @@
                     </button>
                 </div>
                 <div class="modal-body mx-3">
-                    <form action="{{route('rutSingup')}}" method="POST">
+                    <form action="{{route('rutSingup')}}" method="POST" class="login_form">
                         @csrf
                         <div class="md-form mb-5">
                             <i class="far fa-id-card prefix grey-text"></i>
@@ -116,7 +116,7 @@
                             <label data-error="wrong" data-success="right" for="defaultForm-rut">RUT</label>
                         </div>
                         <div class="text-center">
-                            <input type="submit" class="btn purple-gradient mb-4" value="Obtén o renueva">
+                            <input type="submit" class="btn purple-gradient mb-4 submit_btn" value="Obtén o renueva">
                         </div>
                         <small class="text-black-50">* .</small>
                     </form>
@@ -138,6 +138,42 @@
     $('.closeModal').click(function(){
         $('#myModal').hide();
     });
+
+    // var Fn = {
+    //     validaRut : function (rutCompleto) {
+    //         if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
+    //             return false;
+    //         var tmp 	= rutCompleto.split('-');
+    //         var digv	= tmp[1]; 
+    //         var rut 	= tmp[0];
+    //         if ( digv == 'K' ) digv = 'k' ;
+    //         return (Fn.dv(rut) == digv );
+    //     },
+    //     dv : function(T){
+    //         var M=0,S=1;
+    //         for(;T;T=Math.floor(T/10))
+    //             S=(S+T%10*(9-M++%6))%11;
+    //         return S?S-1:'k';
+    //     }
+    // }
+    // alert( Fn.validaRut('11111111-1') ? 'Valido' : 'inválido');
+
+    $('.submit_btn').click(function(){
+        var myForm = $(".login_form");  
+        if (myForm) {   
+            var rut = $('#defaultForm-rut').val();
+            let rutformat = /\d{8}-\w{1}/;
+            if(rutformat.test(rut)){
+                $(this).prop('disabled', true);   
+                $(myForm).submit();   
+            }else{
+                $(this).prop('disabled', true);   
+                alert('You must input the rut value with this format. 11111111-1');
+                location.reload();
+            }
+        }  
+    })
+
   </script>
 </body>
 </html>

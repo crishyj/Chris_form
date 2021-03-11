@@ -12,6 +12,23 @@
   <link href="{{asset('asset/css/mdb.min.css')}}" rel="stylesheet">
   <link href="{{asset('asset/css/steppers.css')}}" rel="stylesheet">
   <link href="{{asset('asset/css/styles.css')}}" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
+  <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+  <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+  <style>
+    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form
+      {
+        font-family: Arial, Helvetica, sans-serif; 
+        color: black
+      }
+      .bootstrap-iso form button, .bootstrap-iso form button:hover
+      {
+        color: white !important;
+      } 
+      .asteriskField{
+        color: red;
+      }
+  </style>
 </head>
 <body>
   <div class="container z-depth-1-half">
@@ -61,7 +78,7 @@
             {{ session('alert') }}
         </div>      
     @endif
-    <form action="{{route('inscriptionStore')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('inscriptionStore')}}" method="POST" enctype="multipart/form-data" class="register_form">
         @csrf
         <ul class="stepper linear px-5">
         <li class="step active">
@@ -122,10 +139,27 @@
                         <input id="profesion" type="text" name='profession' class="form-control validate" required>
                         <label for="profesion">Profesión</label>
                     </div>           
-                    <div class="md-form col-md-6 ml-auto">
+                    {{-- <div class="md-form col-md-6 ml-auto">
                         <input type="text" id="date-picker-example" name="birth" class="form-control datepicker">
                         <label for="date-picker-example">Fecha de nacimiento</label>
-                    </div>
+                    </div> --}}
+                    <div class="md-form col-md-6 ml-auto">
+                        {{-- <label class="control-label col-sm-2 requiredField" for="date">
+                         Date
+                         <span class="asteriskField">
+                          *
+                         </span>
+                        </label> --}}
+                        {{-- <div class="col-sm-10"> --}}
+                         <div class="input-group">
+                          <div class="input-group-addon mr-3">
+                           <i class="fa fa-calendar">
+                           </i>
+                          </div>
+                          <input class="form-control" id="date" name="birth" placeholder="MM/DD/YYYY" type="text"/>
+                         </div>
+                        {{-- </div> --}}
+                    </div> 
                     <select class="mdb-select md-form col-md-6 ml-auto" name="gender">
                         <option value="" disabled selected>Género</option>
                         <option value="1">Masculino</option>
@@ -202,7 +236,7 @@
                     </div>
                 </div>
                 <div class="step-actions">
-                    <input type="submit" class="btn purple-gradient btn-rounded m-0 mt-4" value="Obtén / renueva tu inscripción">
+                    <input type="submit" class="btn purple-gradient btn-rounded m-0 mt-4 submit_btn" value="Obtén / renueva tu inscripción">
                 </div>
             </div>
         </li>
@@ -213,6 +247,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{asset('asset/js/mdb.js')}}"></script>
   <script type="text/javascript" src="{{asset('asset/js/steppers.js')}}"></script>
@@ -245,6 +283,31 @@
       $('.closeModal').click(function(){
         $('#myModal').hide();
       });
+      
+      var date_input=$('input[name="birth"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      date_input.datepicker({
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        });
+
+        $('.submit_btn').click(function(){
+            var myForm = $(".register_form");  
+            if (myForm) {   
+                var rut = $('#rut').val();
+                let rutformat = /\d{8}-\w{1}/;
+                if(rutformat.test(rut)){
+                    $(this).prop('disabled', true);   
+                    $(myForm).submit();   
+                }else{
+                    $(this).prop('disabled', true);   
+                    alert('You must input the rut value with this format. 11111111-1/a');
+                    location.reload();
+                }
+            }  
+        })
     });
   </script>
 </body>
