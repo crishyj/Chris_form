@@ -35,7 +35,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 py-5 text-center">
                 @if (session('alert'))
-                <div class="modal fade" id="myModal">
+                <div class="modal" id="myModal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                     

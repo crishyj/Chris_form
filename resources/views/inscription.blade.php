@@ -36,7 +36,7 @@
       </div>
     </div>
     @if (session('success'))
-        <div class="modal fade" id="myModal">
+        <div class="modal" id="myModal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
             
