@@ -61,7 +61,7 @@
           <div class="md-form mb-5">
             <i class="fas fa-envelope prefix grey-text"></i>
             <input type="email" id="defaultForm-email" class="form-control validate">
-            <label data-error="wrong" data-success="right" for="defaultForm-email">E-mail</label>
+            <label data-error="wrong" data-success="right" for="defaultForm-email" name='rut'>E-mail</label>
           </div>
           <div class="text-center">
             <button class="btn purple-gradient">Enviar</button>

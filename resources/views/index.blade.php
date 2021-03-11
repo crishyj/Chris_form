@@ -1,17 +1,28 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Formulario</title>
-  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/c9ff0b0edd.js"></script>
-  <link href="{{asset('asset/css/mdb.min.css')}}" rel="stylesheet">
-  <link href="{{asset('asset/css/datatables.min.css')}}" rel="stylesheet">
-  <link href="{{asset('asset/css/styles.css')}}" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulario</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c9ff0b0edd.js"></script>
+    <link href="{{asset('asset/css/mdb.min.css')}}" rel="stylesheet">
+    <link href="{{asset('asset/css/datatables.min.css')}}" rel="stylesheet">
+    <link href="{{asset('asset/css/styles.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        .alert_rut{
+            display: none;
+        }
+
+        .dander{
+            /* border: dotted 1px red; */
+            padding: 5px;
+            color: red;
+        }
+    </style>
 </head>
 <body>
   <main>
@@ -110,11 +121,19 @@
                 <div class="modal-body mx-3">
                     <form action="{{route('rutSingup')}}" method="POST" class="login_form">
                         @csrf
-                        <div class="md-form mb-5">
+                        <div class="md-form mb-2">
                             <i class="far fa-id-card prefix grey-text"></i>
-                            <input type="text" name="rut" id="defaultForm-rut" class="form-control validate" required>
+                            <input type="text" name="rut" id="defaultForm-rut" class="form-control" required>
                             <label data-error="wrong" data-success="right" for="defaultForm-rut">RUT</label>
                         </div>
+                        <div class="alert_rut dander">
+                            You must input the rut value with this format. 11111111-1/a
+                        </div>
+                        @if (session('alert'))
+                            <div class="alert alert-danger">
+                                This rut already registered!
+                            </div>
+                        @endif
                         <div class="text-center">
                             <input type="submit" class="btn purple-gradient mb-4 submit_btn" value="Obtén o renueva">
                         </div>
@@ -139,7 +158,7 @@
         $('#myModal').hide();
     });
 
-    // var Fn = {
+      // var Fn = {
     //     validaRut : function (rutCompleto) {
     //         if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
     //             return false;
@@ -166,10 +185,12 @@
             if(rutformat.test(rut)){
                 $(this).prop('disabled', true);   
                 $(myForm).submit();   
+
             }else{
                 $(this).prop('disabled', true);   
-                alert('You must input the rut value with this format. 11111111-1');
-                location.reload();
+                // alert('You must input the rut value with this format. 11111111-1');
+                // rut.val('');
+                $('.alert_rut').css('display', 'block');
             }
         }  
     })

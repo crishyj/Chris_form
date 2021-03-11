@@ -20,6 +20,12 @@ class RutController extends Controller
             return redirect()->back()->with('alert','This user already registered.');
          }
         else{
+            $request->validate([
+                'rutImg' => 'required|max:5120',
+                'docImg' => 'required|max:5120',
+               
+            ]); 
+
             $rutImg = $request['rut'].'.'.$request->rutImg->getClientOriginalExtension();  
             $request->rutImg->move(public_path('rutImg/'), $rutImg);
             $rutImg = 'rutImg/'.$rutImg;
@@ -47,7 +53,7 @@ class RutController extends Controller
             ]);
             
             $options->save();
-            return redirect('/inscription')->with('success', 'Successfully added');  
+            return response()->json('success');
         }     
     }
 
@@ -56,7 +62,7 @@ class RutController extends Controller
             return redirect()->back()->with('alert','This RUT already registered.');
          }
         else{
-            return view('inscription');
+            return view('inscription')->with('rut',$request['rut']);;
         }
         
     }
