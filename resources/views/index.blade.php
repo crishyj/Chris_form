@@ -48,7 +48,7 @@
                             </div>
                     
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success closeModal" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger closeModal" data-dismiss="modal">Close</button>
                             </div>
                     
                         </div>
