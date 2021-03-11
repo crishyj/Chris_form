@@ -96,7 +96,7 @@
                         @csrf
                         <div class="md-form mb-5">
                             <i class="far fa-id-card prefix grey-text"></i>
-                            <input type="number" name="rut" id="defaultForm-rut" class="form-control validate" required>
+                            <input type="text" name="rut" id="defaultForm-rut" class="form-control validate" required>
                             <label data-error="wrong" data-success="right" for="defaultForm-rut">RUT</label>
                         </div>
                         <div class="text-center">
