@@ -187,14 +187,16 @@
                 $(myForm).submit();   
 
             }else{
-                $(this).prop('disabled', true);   
-                // alert('You must input the rut value with this format. 11111111-1');
-                // rut.val('');
+                $(this).prop('disabled', true);                  
                 $('.alert_rut').css('display', 'block');
             }
         }  
     })
 
+    $('#modalLoginForm').on('hidden.bs.modal', function(e){       
+           $('.login_form')[0].reset();  
+           $('.submit_btn').prop('disabled', false);                   
+    });
   </script>
 </body>
 </html>
