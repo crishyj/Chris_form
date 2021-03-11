@@ -52,7 +52,7 @@ class RutController extends Controller
     }
 
     public function rutSingup(Request $request){
-        if (Rut::where('email', '=', $request['email'])->count() > 0) {           
+        if (Rut::where('rut', '=', $request['rut'])->count() > 0) {           
             return redirect()->back()->with('alert','This RUT already registered.');
          }
         else{
