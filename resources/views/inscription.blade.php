@@ -36,14 +36,30 @@
       </div>
     </div>
     @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <div class="modal-header">
+                        <h4 class="modal-title">Congratulation</h4>
+                    </div>
+            
+                    <div class="modal-body">
+                        Successfully added
+                    </div>
+            
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success closeModal" data-dismiss="modal">Close</button>
+                    </div>
+            
+                </div>
+            </div>
         </div>
     @endif
     @if (session('alert'))
         <div class="alert alert-success">
             {{ session('alert') }}
-        </div>
+        </div>      
     @endif
     <form action="{{route('inscriptionStore')}}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -223,6 +239,12 @@
         formatSubmit: 'dd/mm/yyyy'
       })
       $('.mdb-select').materialSelect();
+
+      $('#myModal').show();
+
+      $('.closeModal').click(function(){
+        $('#myModal').hide();
+      });
     });
   </script>
 </body>

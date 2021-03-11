@@ -35,9 +35,25 @@
         <div class="row justify-content-center">
             <div class="col-md-6 py-5 text-center">
                 @if (session('alert'))
-                    <div class="alert alert-success">
-                        {{ session('alert') }}
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                    
+                            <div class="modal-header">
+                                <h4 class="modal-title">Error</h4>
+                            </div>
+                    
+                            <div class="modal-body">
+                                This rut already registered!
+                            </div>
+                    
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success closeModal" data-dismiss="modal">Close</button>
+                            </div>
+                    
+                        </div>
                     </div>
+                </div>
                 @endif
                 <img class="img-fluid mb-3 wow fadeInDown" src="{{asset('asset/images/logoCPLB-black.png')}}" style="width: 300px;">
                 <h5 class="text-dark b-500 wow fadeIn">Formulario</h5>
@@ -115,6 +131,12 @@
   <script type="text/javascript">
     $(document).ready(function() {
       new WOW().init();
+    });
+
+    $('#myModal').show();
+
+    $('.closeModal').click(function(){
+        $('#myModal').hide();
     });
   </script>
 </body>
