@@ -128,12 +128,7 @@
                         </div>
                         <div class="alert_rut dander">
                             You must input the rut value with this format. 11111111-1/a
-                        </div>
-                        @if (session('alert'))
-                            <div class="alert alert-danger">
-                                This rut already registered!
-                            </div>
-                        @endif
+                        </div>                       
                         <div class="text-center">
                             <input type="submit" class="btn purple-gradient mb-4 submit_btn" value="Obtén o renueva">
                         </div>
@@ -185,13 +180,24 @@
             if(rutformat.test(rut)){
                 $(this).prop('disabled', true);   
                 $(myForm).submit();   
-
-            }else{
+            }
+            else
+            {
                 $(this).prop('disabled', true);                  
                 $('.alert_rut').css('display', 'block');
             }
-        }  
-    })
+        }
+    });
+
+    $("#defaultForm-rut").on("input", function(){
+        var rutString = $(this).val();
+
+        if(rutString.length<1){
+            $('.alert_rut').css('display', 'none');
+            $('.login_form')[0].reset();  
+            $('.submit_btn').prop('disabled', false);    
+        }
+    });
 
     $('#modalLoginForm').on('hidden.bs.modal', function(e){       
            $('.login_form')[0].reset();  

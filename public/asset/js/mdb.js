@@ -18177,7 +18177,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var selected = true;
 
         if (this.isMultiple) {
-          $this.find('input[type="checkbox"]').prop('checked', function (index, oldPropertyValue) {
+          $this.find('input[type="checkbox"]').prop('checked', function (index, oldPropertyValue) {			 
             return !oldPropertyValue;
           });
           var hasOptgroup = Boolean(this.$nativeSelect.find('optgroup').length);
@@ -18295,7 +18295,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.$materialOptionsList.find('li:not(.optgroup):not(.disabled):not(.select-toggle-all)').each(function (materialOptionIndex, materialOption) {
           var $optionCheckbox = $(materialOption).find('input[type="checkbox"]');
 
-          if (state && $optionCheckbox.is(':checked') || !state && !$optionCheckbox.is(':checked')) {
+          if (state && $optionCheckbox.is(':checked') || !state && !$optionCheckbox.is(':checked')) {		
             return;
           }
 

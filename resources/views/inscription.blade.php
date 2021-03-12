@@ -31,6 +31,10 @@ $i = 1;
       .asteriskField{
         color: red;
       }
+      .danger{
+        color: red;
+        display: none;
+      }
   </style>
 </head>
 <body>
@@ -92,7 +96,7 @@ $i = 1;
                 <div class="row">
                   
                     <div class="md-form col-md-6 ml-auto">
-                        <input id="rut" type="text" name="rut" class="form-control" placeholder="12.536.589-4"  value=@isset($rut) {{$rut}} @endisset>
+                        <input id="rut" type="text" name="rut" class="form-control" placeholder="12.536.589-4"  value="@isset($rut) {{$rut}} @endisset" disabled>
                         <label for="rut">RUT</label>
                     </div>
                     <div class="md-form col-md-6 ml-auto">
@@ -149,7 +153,7 @@ $i = 1;
                                 <i class="fa fa-calendar">
                                 </i>
                             </div>
-                            <input class="form-control" id="date" name="birth" placeholder="MM/DD/YYYY" type="text"/>
+                            <input class="form-control validate" id="date" name="birth" placeholder="MM/DD/YYYY" type="text" required/>
                         </div>
                     </div> 
                     <select class="mdb-select md-form col-md-6 ml-auto" name="gender" id="gender">
@@ -185,10 +189,10 @@ $i = 1;
                             <div class="file-field">
                                 <div class="btn purple-gradient btn-sm float-left">
                                     <span>Seleccionar</span>
-                                    <input type="file" name="docImg" id = "docImg" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps">
+                                    <input type="file" name="docImg" id = "docImg" class="validate" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" required>
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Subir archivo" >
+                                    <input class="file-path validate" type="text" placeholder="Subir archivo" required>
                                 </div>
                                 @if ($errors->has('docImg'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -205,10 +209,10 @@ $i = 1;
                             <div class="file-field">
                                 <div class="btn purple-gradient btn-sm float-left">
                                     <span>Seleccionar</span>
-                                    <input type="file" name="rutImg" id ="rutImg" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps">
+                                    <input type="file" name="rutImg" class="validate" id ="rutImg" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" required>
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Subir archivo" >
+                                    <input class="file-path validate" type="text" placeholder="Subir archivo" required>
                                 </div>
                                 @if ($errors->has('rutImg'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -234,6 +238,7 @@ $i = 1;
                     <div class="form-check col-md-6">
                         <input type="checkbox" class="form-check-input validate" id="materialUnchecked" required>
                         <label class="form-check-label" for="materialUnchecked">Acepto términos y condiciones de uso</label><br>
+                        <p class="danger">This field is required</p>
                         <a class="btn btn-sm btn-elegant mt-4" href="#" target="_blank">términos y condiciones</a>
                     </div>
                 </div>
@@ -252,12 +257,10 @@ $i = 1;
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
-  <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{asset('asset/js/mdb.js')}}"></script>
   <script type="text/javascript" src="{{asset('asset/js/steppers.js')}}"></script>
-  <!-- More Jquery -->
-  <script type="text/javascript">
+
+<script type="text/javascript">
     $(document).ready(function() {
       // Animations init
       new WOW().init();
@@ -293,7 +296,19 @@ $i = 1;
         autoclose: true,
         });
 
+        
+
         $('.submit_btn').click(function(){
+
+            // if($('#materialUnchecked').is(':checked')){
+            //     $('.danger').css('display', 'none');
+            // }
+            // else{
+            //     $('.danger').css('display', 'block');
+            //     var myForm = $(".register_form");  
+            //     $(this).prop('disabled', true);
+            // }
+
             var myForm = $(".register_form");  
             $(this).prop('disabled', true);
 
@@ -336,36 +351,36 @@ $i = 1;
             form_data.append("upload_file", true);
 
             $.ajax({
-                    url: "{{route('inscriptionStore')}}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: form_data,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success : function(response) {
-                        if(response == 'success') {  
-                            $('#myModal').show();
-                        } else {
-                            let messages = response.data;
-                            if(messages.option) {                               
-                            }
-                        }
-                    },
-                    error: function(response) {
-                        $("#ajax-loading").fadeOut();
-                        if(response.responseJSON.message == 'The given data was invalid.'){                            
-                            let messages = response.responseJSON.errors;
-                            console.log(messages);
-                          
-                            alert(JSON.stringify(messages));
-                            window.location.reload();        
-                        } else {
-                            console.log(response);
-                            alert("Something went wrong");
+                url: "{{route('inscriptionStore')}}",
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success : function(response) {
+                    if(response == 'success') {  
+                        $('#myModal').show();
+                    } else {
+                        let messages = response.data;
+                        if(messages.option) {                               
                         }
                     }
-                });  
+                },
+                error: function(response) {
+                    $("#ajax-loading").fadeOut();
+                    if(response.responseJSON.message == 'The given data was invalid.'){                            
+                        let messages = response.responseJSON.errors;
+                        console.log(messages);
+                        
+                        alert(JSON.stringify(messages));
+                        window.location.reload();        
+                    } else {
+                        console.log(response);
+                        alert("Something went wrong");
+                    }
+                }
+            });  
         })
     });
   </script>
