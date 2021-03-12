@@ -188,16 +188,31 @@
             }
         }
     });
-
-    $("#defaultForm-rut").on("input", function(){
-        var rutString = $(this).val();
-
-        if(rutString.length<1){
-            $('.alert_rut').css('display', 'none');
-            $('.login_form')[0].reset();  
-            $('.submit_btn').prop('disabled', false);    
+    
+    $("#defaultForm-rut").on("keyup change", function(e) {
+        var rut = $('#defaultForm-rut').val();
+        let rutformat = /\d{8}-\w{1}/;
+        if(rutformat.test(rut)){
+           $('.alert_rut').css('display', 'none');
+           $('.submit_btn').prop('disabled', false); 
         }
-    });
+        else
+        {
+            $('.alert_rut').css('display', 'block');
+            $('.submit_btn').prop('disabled', true);
+        }
+       
+    })
+
+    // $("#defaultForm-rut").on("input", function(){
+    //     var rutString = $(this).val();
+
+    //     if(rutString.length<1){
+    //         $('.alert_rut').css('display', 'none');
+    //         $('.login_form')[0].reset();  
+    //         $('.submit_btn').prop('disabled', false);    
+    //     }
+    // });
 
     $('#modalLoginForm').on('hidden.bs.modal', function(e){       
            $('.login_form')[0].reset();  
