@@ -262,11 +262,8 @@ $i = 1;
 
 <script type="text/javascript">
     $(document).ready(function() {
-      // Animations init
       new WOW().init();
-      // Stepper init
       $('.stepper').mdbStepper();
-      // Data Picker Initialization
       $('.datepicker').pickadate({
         monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -296,18 +293,18 @@ $i = 1;
         autoclose: true,
         });
 
+        $("#materialUnchecked").on("change", function (event) {
+            if ($(this).is(":checked")) {
+                $('.danger').css('display', 'none');
+                $('.submit_btn').prop('disabled', false);
+            } else {
+                $('.danger').css('display', 'block');
+                $('.submit_btn').prop('disabled', true);
+            }
+        });
         
 
         $('.submit_btn').click(function(){
-
-            // if($('#materialUnchecked').is(':checked')){
-            //     $('.danger').css('display', 'none');
-            // }
-            // else{
-            //     $('.danger').css('display', 'block');
-            //     var myForm = $(".register_form");  
-            //     $(this).prop('disabled', true);
-            // }
 
             var myForm = $(".register_form");  
             $(this).prop('disabled', true);
@@ -350,37 +347,45 @@ $i = 1;
             form_data.append("rutImg", rutImg);
             form_data.append("upload_file", true);
 
-            $.ajax({
-                url: "{{route('inscriptionStore')}}",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success : function(response) {
-                    if(response == 'success') {  
-                        $('#myModal').show();
-                    } else {
-                        let messages = response.data;
-                        if(messages.option) {                               
+            if($('#materialUnchecked').is(':checked')){
+                $('.danger').css('display', 'none');
+                $('.submit_btn').prop('disabled', false);
+                $.ajax({
+                    url: "{{route('inscriptionStore')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success : function(response) {
+                        if(response == 'success') {  
+                            $('#myModal').show();
+                            window.location.href = "/";
+                        } else {
+                            let messages = response.data;
+                            if(messages.option) {                               
+                            }
+                        }
+                    },
+                    error: function(response) {
+                        $("#ajax-loading").fadeOut();
+                        if(response.responseJSON.message == 'The given data was invalid.'){                            
+                            let messages = response.responseJSON.errors;
+                            console.log(messages);
+                            
+                            alert(JSON.stringify(messages));
+                            window.location.reload();        
+                        } else {
+                            console.log(response);
+                            alert("Something went wrong");
                         }
                     }
-                },
-                error: function(response) {
-                    $("#ajax-loading").fadeOut();
-                    if(response.responseJSON.message == 'The given data was invalid.'){                            
-                        let messages = response.responseJSON.errors;
-                        console.log(messages);
-                        
-                        alert(JSON.stringify(messages));
-                        window.location.reload();        
-                    } else {
-                        console.log(response);
-                        alert("Something went wrong");
-                    }
-                }
-            });  
+                });
+            }
+            else{
+                $('.danger').css('display', 'block');
+            }
         })
     });
   </script>
