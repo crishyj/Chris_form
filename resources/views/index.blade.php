@@ -160,7 +160,7 @@
         var myForm = $(".login_form");  
         if (myForm) {   
             var rut = $('#defaultForm-rut').val();
-            let rutformat = /\d{8}-\w{1}$/;
+            let rutformat = /\d{7}-\w{1}$/;
             if(rutformat.test(rut)){
                 $(this).prop('disabled', true);   
                 $(myForm).submit();   
@@ -176,7 +176,7 @@
     $("#defaultForm-rut").on("keyup change", function(e) {
         $('.alert').css('display', 'none');
         var rut = $('#defaultForm-rut').val();
-        let rutformat = /\d{8}-\w{1}$/;
+        let rutformat = /\d{7}-\w{1}$/;
         if(rutformat.test(rut) && rut.length<11){
            $('.alert_rut').css('display', 'none');
            $('.submit_btn').prop('disabled', false); 
