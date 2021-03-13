@@ -46,20 +46,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 py-5 text-center">              
                 <img class="img-fluid mb-3 wow fadeInDown" src="{{asset('asset/images/logoCPLB-black.png')}}" style="width: 300px;">
-                <h5 class="text-dark b-500 wow fadeIn">Formulario</h5>
-                <p class="b-500 mb-4 wow fadeIn">
-                    This is my skype id: live:.cid.a3391d17e059e4b
-                    <br>
-                    You can add me on your skype and contact to me directly.
-                    <br>
-                    Don't mention about the skype on here.
-                    <br>
-                    They are not allow the external communication.
-                    <br>
-                    Please read this and let me know on skype.
-                    <br>
-                    Then, I will remove this on your site.
-                </p>
+                <h5 class="text-dark b-500 wow fadeIn">Formulario</h5>                
                 <p class="b-500 mb-4 wow fadeIn">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <a class="btn purple-gradient" data-toggle="modal" data-target="#modalLoginForm">Inscríbete</a>
                 <a class="btn purple-gradient" href="#" target="_blank">Convenios</a>
