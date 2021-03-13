@@ -44,28 +44,7 @@
     </div>
     <div class="container" id="info">
         <div class="row justify-content-center">
-            <div class="col-md-6 py-5 text-center">
-                @if (session('alert'))
-                <div class="modal" id="myModal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                    
-                            <div class="modal-header">
-                                <h4 class="modal-title">Error</h4>
-                            </div>
-                    
-                            <div class="modal-body">
-                                This rut already registered!
-                            </div>
-                    
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger closeModal" data-dismiss="modal">Close</button>
-                            </div>
-                    
-                        </div>
-                    </div>
-                </div>               
-                @endif
+            <div class="col-md-6 py-5 text-center">              
                 <img class="img-fluid mb-3 wow fadeInDown" src="{{asset('asset/images/logoCPLB-black.png')}}" style="width: 300px;">
                 <h5 class="text-dark b-500 wow fadeIn">Formulario</h5>
                 <p class="b-500 mb-4 wow fadeIn">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -128,7 +107,12 @@
                         </div>
                         <div class="alert_rut dander">
                             You must input the rut value with this format. 11111111-1/a
-                        </div>                       
+                        </div> 
+                        @if (session('alert'))
+                            <div class="alert alert-danger">
+                                {{ session('alert') }}
+                            </div> 
+                        @endif                      
                         <div class="text-center">
                             <input type="submit" class="btn purple-gradient mb-4 submit_btn" value="Obtén o renueva">
                         </div>
@@ -190,9 +174,10 @@
     });
 
     $("#defaultForm-rut").on("keyup change", function(e) {
+        $('.alert').css('display', 'none');
         var rut = $('#defaultForm-rut').val();
         let rutformat = /\d{8}-\w{1}$/;
-        if(rutformat.test(rut)){
+        if(rutformat.test(rut) && rut.length<11){
            $('.alert_rut').css('display', 'none');
            $('.submit_btn').prop('disabled', false); 
         }
@@ -200,8 +185,7 @@
         {
             $('.alert_rut').css('display', 'block');
             $('.submit_btn').prop('disabled', true);
-        }
-       
+        }       
     })
 
     // $("#defaultForm-rut").on("input", function(){

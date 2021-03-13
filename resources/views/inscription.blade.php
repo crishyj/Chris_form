@@ -69,7 +69,7 @@ $i = 1;
                 </div>
         
                 <div class="modal-body">
-                    Successfully added
+                    Form submitted successfully
                 </div>
         
                 <div class="modal-footer">
@@ -85,7 +85,7 @@ $i = 1;
             {{ session('alert') }}
         </div>      
     @endif
-    <form action="" method="POST" enctype="multipart/form-data" class="register_form">
+    <form method="POST" enctype="multipart/form-data" class="register_form">
         @csrf
         <ul class="stepper linear px-5">
         <li class="step active">
@@ -302,6 +302,10 @@ $i = 1;
                 $('.submit_btn').prop('disabled', true);
             }
         });
+
+        $(".register_form").submit(function(e) {
+            e.preventDefault();
+        });
         
 
         $('.submit_btn').click(function(){
@@ -361,7 +365,6 @@ $i = 1;
                     success : function(response) {
                         if(response == 'success') {  
                             $('#myModal').show();
-                            window.location.href = "/";
                         } else {
                             let messages = response.data;
                             if(messages.option) {                               
