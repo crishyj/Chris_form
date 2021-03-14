@@ -168,6 +168,48 @@
         if(Fn.validaRut(rut)){
            $('.alert_rut').css('display', 'none');
            $('.submit_btn').prop('disabled', false); 
+           $('.submit_btn').click(function(){
+                var myForm = $(".login_form");  
+                $(this).prop('disabled', true);
+
+                let _token = $('input[name=_token]').val();        
+                let rut = $('#defaultForm-rut').val();
+                var form_data =new FormData();
+                    
+                form_data.append("_token", _token);
+                form_data.append("rut", rut);
+                $.ajax({
+                    url: "{{route('rutSingup')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success : function(response) {
+                        if(response == 'failed') {  
+                        $('.alert_rut1').css('display', 'block');
+                        } else if(response == 'success') {
+                            window.location.href = "/inscription?rut="+rut;
+                        }else{
+                            
+                        }
+                    },
+                    error: function(response) {
+                        $("#ajax-loading").fadeOut();
+                        if(response.responseJSON.message == 'The given data was invalid.'){                            
+                            let messages = response.responseJSON.errors;
+                            console.log(messages);
+                            
+                            alert(JSON.stringify(messages));
+                            window.location.reload();        
+                        } else {
+                            console.log(response);
+                            alert("Something went wrong");
+                        }
+                    }
+                });
+            });
         }
         else
         {
@@ -182,46 +224,7 @@
            $('.alert_rut1').css('display', 'none');              
     });
 
-    $('.submit_btn').click(function(){
-        var myForm = $(".login_form");  
-        $(this).prop('disabled', true);
-
-        let _token = $('input[name=_token]').val();        
-        let rut = $('#defaultForm-rut').val();
-        var form_data =new FormData();
-            
-        form_data.append("_token", _token);
-        form_data.append("rut", rut);
-        $.ajax({
-            url: "{{route('rutSingup')}}",
-            type: 'POST',
-            dataType: 'json',
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success : function(response) {
-                if(response == 'failed') {  
-                  $('.alert_rut1').css('display', 'block');
-                } else if(response == 'success') {
-                    window.location.href = "/inscription?rut="+rut;
-                }
-            },
-            error: function(response) {
-                $("#ajax-loading").fadeOut();
-                if(response.responseJSON.message == 'The given data was invalid.'){                            
-                    let messages = response.responseJSON.errors;
-                    console.log(messages);
-                    
-                    alert(JSON.stringify(messages));
-                    window.location.reload();        
-                } else {
-                    console.log(response);
-                    alert("Something went wrong");
-                }
-            }
-        });
-    });
+    
 
   </script>
 </body>
