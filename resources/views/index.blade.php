@@ -106,7 +106,7 @@
                             <label data-error="wrong" data-success="right" for="defaultForm-rut">RUT</label>
                         </div>
                         <div class="alert_rut dander">
-                            You must input the rut value with this format. 11111111-1/a
+                            You must input the rut value with this format. 11111111-1/k
                         </div> 
                         @if (session('alert'))
                             <div class="alert alert-danger">
