@@ -23,7 +23,7 @@
             color: red;
         }
 
-        .alert_rut{
+        .alert_rut1{
             display: none;
         }
     </style>
@@ -113,7 +113,7 @@
                             You must input the rut value with this format. 11111111-1/k
                         </div> 
                        
-                        <div class="alert alert-danger alert_rut">
+                        <div class="alert alert-danger alert_rut1">
                             This RUT already registered.
                         </div> 
                                            
@@ -178,7 +178,8 @@
 
     $('#modalLoginForm').on('hidden.bs.modal', function(e){       
            $('.login_form')[0].reset();  
-           $('.submit_btn').prop('disabled', false);                   
+           $('.submit_btn').prop('disabled', false);     
+           $('.alert_rut1').css('display', 'none');              
     });
 
     $('.submit_btn').click(function(){
@@ -201,7 +202,7 @@
             processData: false,
             success : function(response) {
                 if(response == 'failed') {  
-                  $('.alert_rut').css('display', 'block');
+                  $('.alert_rut1').css('display', 'block');
                 } else if(response == 'success') {
                     window.location.href = "/inscription?rut="+rut;
                 }
