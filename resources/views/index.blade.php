@@ -137,49 +137,31 @@
         $('#myModal').hide();
     });
 
-    // var Fn = {
-    //     validaRut : function (rutCompleto) {
-    //         if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
-    //             return false;
-    //         var tmp 	= rutCompleto.split('-');
-    //         var digv	= tmp[1]; 
-    //         var rut 	= tmp[0];
-    //         if ( digv == 'K' ) digv = 'k' ;
-    //         return (Fn.dv(rut) == digv );
-    //     },
-    //     dv : function(T){
-    //         var M=0,S=1;
-    //         for(;T;T=Math.floor(T/10))
-    //             S=(S+T%10*(9-M++%6))%11;
-    //         return S?S-1:'k';
-    //     }
-    // }
-
-    // alert( Fn.validaRut('11111111-k') ? 'Valido' : 'inválido');
-
-    $('.submit_btn').click(function(){
-        var myForm = $(".login_form");  
-        if (myForm) {   
-            var rut = $('#defaultForm-rut').val();
-            let rutformat = /\d{7}-\w{1}$/;
-            if(rutformat.test(rut)){
-                $(this).prop('disabled', true);   
-                $(myForm).submit();   
-            }
-            else
-            {
-                $(this).prop('disabled', true);                  
-                $('.alert_rut').css('display', 'block');
-            }
+    var Fn = {
+        validaRut : function (rutCompleto) {
+            if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
+                return false;
+            var tmp 	= rutCompleto.split('-');
+            var digv	= tmp[1]; 
+            var rut 	= tmp[0];
+            if ( digv == 'K' ) digv = 'k' ;
+            return (Fn.dv(rut) == digv );
+        },
+        dv : function(T){
+            var M=0,S=1;
+            for(;T;T=Math.floor(T/10))
+                S=(S+T%10*(9-M++%6))%11;
+            return S?S-1:'k';
         }
-    });
+    }
 
     $("#defaultForm-rut").on("keyup change", function(e) {
         $('.alert').css('display', 'none');
         var rut = $('#defaultForm-rut').val();
         lastChar = rut[rut.length -1];
         let rutformat = /\d{7}-\w{1}$/;
-        if(rutformat.test(rut) && rut.length < 11 && (lastChar == 'k' ||  lastChar >= '0' && lastChar <= '9')){
+        // if(rutformat.test(rut) && rut.length < 11 && (lastChar == 'k' ||  lastChar >= '0' && lastChar <= '9')){
+        if(Fn.validaRut(rut)){
            $('.alert_rut').css('display', 'none');
            $('.submit_btn').prop('disabled', false); 
         }
@@ -187,7 +169,7 @@
         {
             $('.alert_rut').css('display', 'block');
             $('.submit_btn').prop('disabled', true);
-        }       
+        }          
     })
 
     $('#modalLoginForm').on('hidden.bs.modal', function(e){       
