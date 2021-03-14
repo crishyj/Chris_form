@@ -23,7 +23,6 @@ class RutController extends Controller
             $request->validate([
                 'rutImg' => 'required|max:5120',
                 'docImg' => 'required|max:5120',
-               
             ]); 
 
             $rutImg = $request['rut'].'.'.$request->rutImg->getClientOriginalExtension();  
@@ -59,10 +58,11 @@ class RutController extends Controller
 
     public function rutSingup(Request $request){
         if (Rut::where('rut', '=', $request['rut'])->count() > 0) {           
-            return redirect()->back()->with('alert','This RUT already registered.');
+            return response()->json('failed');
          }
         else{
-            return view('inscription')->with('rut',$request['rut']);;
+            return response()->json('success');
+            // return view('inscription')->with('rut',$request['rut']);
         }
         
     }

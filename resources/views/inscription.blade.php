@@ -96,7 +96,7 @@ $i = 1;
                 <div class="row">
                   
                     <div class="md-form col-md-6 ml-auto">
-                        <input id="rut" type="text" name="rut" class="form-control" placeholder="12.536.589-4"  value="@isset($rut) {{$rut}} @endisset" disabled>
+                        <input id="rut" type="text" name="rut" class="form-control" placeholder="12.536.589-4"  value="{{ app('request')->input('rut') }}" disabled>
                         <label for="rut">RUT</label>
                     </div>
                     <div class="md-form col-md-6 ml-auto">

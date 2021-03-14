@@ -22,6 +22,10 @@
             padding: 5px;
             color: red;
         }
+
+        .alert_rut{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -98,7 +102,7 @@
                     </button>
                 </div>
                 <div class="modal-body mx-3">
-                    <form action="{{route('rutSingup')}}" method="POST" class="login_form">
+                    <form action="" method="POST" class="login_form">
                         @csrf
                         <div class="md-form mb-2">
                             <i class="far fa-id-card prefix grey-text"></i>
@@ -108,11 +112,11 @@
                         <div class="alert_rut dander">
                             You must input the rut value with this format. 11111111-1/k
                         </div> 
-                        @if (session('alert'))
-                            <div class="alert alert-danger">
-                                {{ session('alert') }}
-                            </div> 
-                        @endif                      
+                       
+                        <div class="alert alert-danger alert_rut">
+                            This RUT already registered.
+                        </div> 
+                                           
                         <div class="text-center">
                             <input type="submit" class="btn purple-gradient mb-4 submit_btn" value="Obtén o renueva">
                         </div>
@@ -176,6 +180,48 @@
            $('.login_form')[0].reset();  
            $('.submit_btn').prop('disabled', false);                   
     });
+
+    $('.submit_btn').click(function(){
+        var myForm = $(".login_form");  
+        $(this).prop('disabled', true);
+
+        let _token = $('input[name=_token]').val();        
+        let rut = $('#defaultForm-rut').val();
+        var form_data =new FormData();
+            
+        form_data.append("_token", _token);
+        form_data.append("rut", rut);
+        $.ajax({
+            url: "{{route('rutSingup')}}",
+            type: 'POST',
+            dataType: 'json',
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(response) {
+                if(response == 'failed') {  
+                  $('.alert_rut').css('display', 'block');
+                } else if(response == 'success') {
+                    window.location.href = "/inscription?rut="+rut;
+                }
+            },
+            error: function(response) {
+                $("#ajax-loading").fadeOut();
+                if(response.responseJSON.message == 'The given data was invalid.'){                            
+                    let messages = response.responseJSON.errors;
+                    console.log(messages);
+                    
+                    alert(JSON.stringify(messages));
+                    window.location.reload();        
+                } else {
+                    console.log(response);
+                    alert("Something went wrong");
+                }
+            }
+        });
+    });
+
   </script>
 </body>
 </html>
